@@ -1,6 +1,7 @@
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 
 // Request bodies are validated here; the user service stays the authority on its own rules.
+// The Swagger CLI plugin turns these types and comments into the OpenAPI document.
 
 export class LoginDto {
   /** @example alice@example.com */
