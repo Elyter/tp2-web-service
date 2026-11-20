@@ -6,15 +6,18 @@ import { grpcOptions } from '@recipes/contracts/grpc';
 import { AuthController } from './auth/auth.controller.js';
 import { AuthGuard } from './auth/auth.guard.js';
 import { ErrorFilter } from './common/error.filter.js';
-import { USER_CLIENT } from './common/grpc.js';
+import { RECIPE_CLIENT, USER_CLIENT } from './common/grpc.js';
 import { config } from './config.js';
 import { HealthController } from './health.controller.js';
+import { RecipesController } from './recipes/recipes.controller.js';
 
 @Module({
-  controllers: [AuthController, HealthController],
+  controllers: [AuthController, HealthController, RecipesController],
   imports: [
+    // One gRPC client per service, each built from its own .proto
     ClientsModule.register([
       { name: USER_CLIENT, ...grpcOptions('user', config.userGrpcUrl) },
+      { name: RECIPE_CLIENT, ...grpcOptions('recipe', config.recipeGrpcUrl) },
     ]),
   ],
   providers: [
